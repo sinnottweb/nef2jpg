@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nef2jpg-api
+    runtime: docker
+    dockerfilePath: ./web/backend/Dockerfile
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
+    # Auto-deploy when main branch is pushed
+    autoDeploy: true

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEF to JPG — Conversor RAW Online</title>
+    <meta name="description" content="Convierte archivos RAW de Nikon (.NEF) y otras cámaras a JPEG de alta calidad gratis online.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">⬡</div>
+                NEF<span>→JPG</span>
+            </div>
+            <div class="header-badge">Online</div>
+        </div>
+    </header>
+
+    <main class="animate-fade-up">
+        <section class="hero">
+            <div class="hero-tag">✨ Rápido & Privado</div>
+            <h1>Convertí tus fotos RAW a <span class="accent">JPEG</span> al instante</h1>
+            <p>Subí tu archivo .NEF y descargá la versión JPEG optimizada sin perder calidad. Procesamiento seguro en la nube.</p>
+            <div class="format-pills">
+                <span class="pill">.NEF</span>
+                <span class="pill">.CR2</span>
+                <span class="pill">.ARW</span>
+                <span class="pill">.DNG</span>
+                <span class="pill">.RAF</span>
+            </div>
+        </section>
+
+        <section class="converter-card">
+            <!-- DROP ZONE -->
+            <div id="drop-zone">
+                <div class="dz-icon">📸</div>
+                <div class="dz-text">
+                    <div class="dz-title">Arrastrá tu archivo RAW acá</div>
+                    <div class="dz-sub">o hacé click para buscar en tu PC</div>
+                </div>
+                <button class="dz-btn">Seleccionar archivo</button>
+                <input type="file" id="file-input" accept=".nef,.cr2,.cr3,.arw,.dng,.raf,.rw2,.orf,.pef">
+            </div>
+
+            <!-- FILE SELECTED VIEW -->
+            <div id="file-selected-view" class="hidden">
+                <div class="file-info-bar">
+                    <div class="file-thumb">RAW</div>
+                    <div class="file-details">
+                        <div class="file-name" id="file-name">foto.nef</div>
+                        <div class="file-size" id="file-size">24 MB</div>
+                    </div>
+                    <button id="btn-change-file">Cambiar</button>
+                </div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div id="settings-grid" class="settings-grid hidden">
+                <!-- Quality -->
+                <div class="setting-block">
+                    <div class="setting-label">Calidad JPEG</div>
+                    <div class="quality-header">
+                        <span>Ajuste de compresión</span>
+                        <span class="quality-value" id="quality-value">90</span>
+                    </div>
+                    <input type="range" id="quality-slider" min="50" max="100" value="90">
+                    <div class="quality-hints">
+                        <span>Menor tamaño</span>
+                        <span>Mejor calidad</span>
+                    </div>
+                </div>
+
+                <!-- Resize -->
+                <div class="setting-block">
+                    <div class="setting-label">Tamaño de salida</div>
+                    <div class="resize-options">
+                        <div class="resize-option">
+                            <input type="radio" id="res-orig" name="resize" value="0" checked>
+                            <label for="res-orig">Original</label>
+                        </div>
+                        <div class="resize-option">
+                            <input type="radio" id="res-fhd" name="resize" value="1920">
+                            <label for="res-fhd">1920px (FHD)</label>
+                        </div>
+                        <div class="resize-option">
+                            <input type="radio" id="res-4k" name="resize" value="3840">
+                            <label for="res-4k">3840px (4K)</label>
+                        </div>
+                        <div class="resize-option">
+                            <input type="radio" id="res-custom" name="resize" value="custom">
+                            <label for="res-custom">Personalizado</label>
+                        </div>
+                        <div id="custom-size-row">
+                            <input type="number" id="custom-size-input" placeholder="Lado mayor" value="2048" min="100">
+                            <span class="input-suffix">px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONVERT BUTTON / FOOTER -->
+            <div id="convert-footer" class="convert-footer hidden">
+                <div class="server-notice">
+                    <div id="server-dot" class="server-dot sleeping"></div>
+                    <span id="server-status-text">Verificando servidor...</span>
+                </div>
+                <button id="btn-convert" disabled>
+                    Convertir a JPG ✨
+                </button>
+            </div>
+
+            <!-- PROGRESS VIEW -->
+            <div id="progress-view">
+                <div class="progress-icon">⚙️</div>
+                <div>
+                    <div class="progress-title" id="progress-title">Convirtiendo...</div>
+                    <div class="progress-sub" id="progress-sub">Procesando RAW</div>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div id="progress-bar"></div>
+                </div>
+                <div id="wakeup-notice">
+                    <strong>Aviso:</strong> Como estamos usando un servidor gratuito, la primera conversión puede tardar unos ~40 segundos mientras el sistema "despierta". Las siguientes serán instantáneas.
+                </div>
+            </div>
+
+            <!-- SUCCESS VIEW -->
+            <div id="success-view">
+                <div class="success-icon-wrap">✓</div>
+                <div>
+                    <div class="success-title">¡Conversión exitosa!</div>
+                    <div class="success-sub">Tu imagen está lista para descargar.</div>
+                </div>
+                <div class="success-actions">
+                    <button id="btn-download">⬇ Descargar JPG</button>
+                    <button id="btn-convert-another">Convertir otra foto</button>
+                </div>
+            </div>
+
+            <!-- ERROR VIEW -->
+            <div id="error-view">
+                <div class="error-icon-wrap">✕</div>
+                <div>
+                    <div class="error-title">Ocurrió un error</div>
+                    <div id="error-message">No se pudo procesar el archivo.</div>
+                </div>
+                <button id="btn-retry">Intentar de nuevo</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-title">Motor LibRaw</div>
+                <div class="feature-desc">Utiliza el estándar de la industria para decodificar los archivos RAW con máxima fidelidad de color.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Privacidad total</div>
+                <div class="feature-desc">Tus archivos se procesan en memoria y se descartan inmediatamente después de la conversión.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Multidispositivo</div>
+                <div class="feature-desc">Funciona en Windows, Mac, iOS y Android. No requiere instalación.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>NEF to JPG Converter. Hecho con ❤️ y Python.</p>
+    </footer>
+
+    <!-- Script principal y Config -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

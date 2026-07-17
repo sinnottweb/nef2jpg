@@ -7,4 +7,4 @@
  *
  * Luego volvé a hacer deploy del frontend en Vercel.
  */
-window.API_BASE_URL = "https://nef2jpg-api.onrender.com";
+window.API_BASE_URL = "https://nef2jpg.onrender.com";

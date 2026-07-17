@@ -1,16 +1,3 @@
 {
-  "version": 2,
-  "name": "nef2jpg-frontend",
-  "builds": [
-    {
-      "src": "**/*",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  "cleanUrls": true
 }
